@@ -17,7 +17,8 @@ import {
   Zoom,
   Grow,
   InputAdornment,
-  TextField
+  TextField,
+  Fade
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
@@ -30,18 +31,20 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 import MoodIcon from '@mui/icons-material/Mood';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import doctorConsultationImage from '../assets/imagePro.png';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#2196F3',
     },
     secondary: {
-      main: '#f50057',
+      main: '#FF4081',
     },
     background: {
-      default: '#f8f9fa',
+      default: '#F0F4F8',
     },
   },
   typography: {
@@ -55,6 +58,12 @@ const theme = createTheme({
           textTransform: 'none',
           fontWeight: 600,
           padding: '10px 20px',
+          boxShadow: '0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            transform: 'translateY(-2px)',
+            boxShadow: '0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)',
+          },
         },
       },
     },
@@ -62,11 +71,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 20,
-          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)',
-          transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06)',
+          transition: 'all 0.3s ease-in-out',
           '&:hover': {
             transform: 'translateY(-5px)',
-            boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15), 0 6px 10px rgba(0, 0, 0, 0.08)',
           },
         },
       },
@@ -92,7 +101,7 @@ const doctors = [
     rating: 4.6, 
     patientStories: 1141, 
     consultationFee: 499,
-    image: 'data:image/jpeg;base64,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'
+    image: 'data:image/jpeg;base64,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'
   },
   { 
     name: 'Dr. Rahul Gupta', 
@@ -102,8 +111,7 @@ const doctors = [
     rating: 4.7, 
     patientStories: 1299, 
     consultationFee: 499,
-    image: 'https://img.freepik.com/free-photo/beautiful-young-female-doctor-looking-camera-office_1301-7807.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1727308800&semt=ais_hybrid'
-
+    image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQA6QMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAABAgADBAUGBwj/xAA5EAABAwIEAwUGBQMFAQAAAAABAAIDBBEFEiFBBjFREyIyYXEHFIGRocEVI2Kx8EJSgiQzQ6LRFv/EABkBAQEBAQEBAAAAAAAAAAAAAAABAgMEBf/EACARAQADAQACAgMBAAAAAAAAAAABAhEDITESQQQiYVH/2gAMAwEAAhEDEQA/AOvZyVoVbFYF2czhMEoTKBgUQUl1LoLLpgVVdQOQW3WPX11Lh1JJV107IYIxdz3nQIzTxwQyTTPayONpc97jYNA3XiHHfFcvEVdkgzNw+F1oI+Ref73fZZtONVrrsa72pxduW4ThzpoR/wAk5LS7zDRt9U9L7VKZ1QIqvDJYwQNY3hxPmL20Xm/D9HUV9T2VLG6SU+FjRcfHyW8d7O8Ymhle2NzZ2uu0OPPquM9Ml3jjsenseD4xQ4zTGfD5hIGmz2kZXMPmDy++11sQvCsNxHEeE8agfLHJHLbLLHI0hsrel9/XZe2YZXU+JUMNZRvzwytuDuDuD0INwutbfJyvT4yyrKKKLTCKIIoCigooCiAoEwQCylkVEMBRFBDCkKshWlKQqKXBJZWkJbIjXhWBVhWBaBBUuhdAlA2ZLnSkpC5MFudTP1VBcgXqYOL9q2NNgwqLC4pB29Q4PkaHatjbrr6my8nk7rcrbl79LD9luePDM7iivdLvJZp/TssngTDff8WzFgcYmflhwuATyP0XC9vt6edd8PSfZvgH4NhXbVLAKypAc828A2b/ADc+S7cNvtdcDRTV5r/dexxCAg5TKZxrpe+UggBddBLMYJYHSSOla0EPIAcQfpdeSfM7L3RHjIarjTAYsbwySEgNnaC6F9tWuH2Wi9kmIB8VVQyS2fpIIydx3XEfILa08FdJiEeeieWF7mumkqHF7Rs7p8F5XhOITYFxS+SMn/RVj2vH9zM5Dh8l25Tjh+RGw+hAVEGOa9oc03a4XB6or1vAiIQRCgiZBMggTBAJgiooooghQRKCAJSmQKEq3JbKxyVVGsCZKEbrSISlJRKQoISq3FElUvcqCXpDJ0VbnKqWVkTHSSGzGgknoAn0PMvaNGDjjWMAzu1dpyuRb7puA5n0mIGnFxO0ZgL8xqFiYpUjFMQrqx7rOndaME8mgWH0CwaSs/CuIKKcG7s9pPR2ll47/tr2c/1mJfQNHVwS04lfYvtr1usKhmL6uofJHK0yDQZCfqsaCSHEKR0Wd0bngFrmOykO/lllUEJihySQSPda2bt3WPwXmjy9+NgKloLo5Glr7XaeYK+dsXlbNxDikkZ0dXSm46F5XsfFmMQcL4K+QG9dVuLYWlxPetz12AXij6R+UVERzk3Mjd+epXbnEvN2mNyHv/Blb7/wzQTF2ZwjyOPmNFu1zXs7pHUfCdE17rmXNKPION7LpF649Pn29yKKCKIKZKmQFMEEQioooogiBRKCAIFFAoSUoIlBVGrUUUWkC6RxTFVuKoRxVDyrHlY7ygR7lquJIqipwSshoxed0Zyi9r+XxWxkKrJSfRHt4fHUTQOHasLTmsXPBs0/zZejcLcCQ8Q4OK9wfFO6UPpZH377BzzDz1Wb/wDDu4nxCaV7nUWHl4zPay75jbXKDoBff5A812PBdsBrJeG617rgmSilef8AcYTci/UFcqc911t0zGH+DVEDQIyY549HDYrb0k1YI/zIo721PVdNV0bagBwIEjR3T9lqXANkMbtDuDsV4unOay+jz6xeP6+fuOcSqcS4sqfe5hkgeYYW8mtaLcviSsOLtYJGSsLud3ggktPXzC7fiHguuqcfqJsLYx87y6Rkcre5KDzbfZw5+YO1teLloKmnrXUdYyWlqIXFrow7wHprtZdaztdea0ZaXrfs94gjr6P3AuZngHcsfE3y/mlwuxC8q9k1PTw4hVPlqIs4IZDGDe7iDc/IL1Veivp5ukZYUUEVWBTJUQgYJglCKKKiF1LoCUFEEEKVFBCQKCKCqNWgoClJWkQqpxTEqtx0VFUhWO8q6RY8hVFLythg2HMrpRJM49mx4uz+/wBfJa15W74VfftGdHXRYdZFTxloDRltyA5LQce4eyTh+erbE/3qiHbQPjNnsI/qB6DmfRdHD4fMK17RNGWOHMb7rMWyy2jYxylC7in3Rk7cQw+ueIwewEBYH3Fwc4PMrPirIsXjyvp302IRgCamltmb0seRB2cNPitfh1JWcOYq6MTMOBVFmxB7rGmeSbNH6b6fEdFvK6lc8+80rWCsjaQxzxoRcEtPrYa7EJ0iLeJTl8qZMNRWRuEbwQWvaOmosuc9rXCIxfCvxiiY4V8EdpHRjWWPnqN7c/mvQC2DE6YyWyPILXA82O3BV3Y3g7KUBzS3K4bEWXDlT4z5ejt0+dfHt898Px1GEjDsSqMMnlMbx2c0dwxjTudLEf8Aq9qa4PaHN5EXFlruHqSOnnxbhiraJIo/zqdrtQ6B55f4u0+IWxipjRwx07jfs2Bo9F1mnxn+OM3+cR/pkUEUZRMlRUBCZIE10BuogFLooqIXUQBBEoKoiCiCDUXQJQugtIF1W8pyVU8qwKnlY8iveVjSlUUSG11t+FZRHVm+7gD8VpXlZuCOtNLY62BQ+3ojRZ9j8FcOWvPZY1JIKmnZJvZZA5arnLaqenhqIjFURNfFKLOY4XCppw6mkbSzuLmO0gkP9X6T5gfP9812oHqhPHFNE6OcXYeY6W3UGHVwuppDWwNzFo/OjAv2jevqNvksyJ8M0bJIy0tkALXN5EFYDsUgoiI6+Wwucklj3h5+aowd0kj3+7jLRMlc5mZpBN7GwHS+Y+hCYNbi1qfjvApG6OqKeogf5gZXD6rd1sRdHnt3mlaCeWqfUsxCu7NssMh93i7pe9m+Xoulif2sTXPbkzNBLTtfZbtO4xWua1KKuqacwuuPAfoqFlRUQUUBCZKogZRKigKl0qKoiCl0LoIogSlug0wcFLqsFElbRHFVuKJKRyoresaRZD1jyboMaVZGDSZK8NNrSNLdfn9ljyKnMWuzN0I1BQeiYNV9mzsJNG30K3Q15LjsKqPeIWSHQvF/iF1VHN2kLb+JYs3C9yUkP8Wqc97Q6XWMSQ+x0IWdXFoYy1soTtsqe2Y3xuA9SninidoJGZttU0yWBLg1JJVNqnsJew9zUgC+ywMQq3PqQ2MuLQ7K1o/q6k+S3lW6QQuETc0ljYea56KhqzKS6NzX5MgdfQDc36rn1m309H41a+ZsyaOeSed0crnSCXckWHoo4FriDzHNXUeHiGcSuIGXwgbLPmp4pA7u6kXvvdXnExHlz7zWbfq1N9VCbIa3QK6OA3RShFENdRKiimQQupdAULoEqIAgoSgiNCCpdKCouiCUjimKRxQI4rHkVzlRIiseRUu5q+RUOQbjAaq35O7TdvouzoJQWi3Jeb085p5myjm0/RdrhU+YBp0zDNY7KS1DpWG7QSsauhMzMzfE3e/NWwOuyxVlxvyXOY1us5OtMIg097n5qOa3caHRbaRjZPE0ELXy4YxxPZue02uDmv8ADVcJ5z9PRXtE+1WH1skNeKGqdmjePyXnnfoeq2x0PIFcniuG4owtnonQz5De2YscLeR0/ZdQZ2WGd4zWF9d1057mS59oruwYkpJJckZdfkFVJVwjTOCeg1WFLUF4IHIro4qlEt1EYMolUugZRLdS6BrqXQUQG6F0ECUBJQulJS3QaEFFVAp7rohkripdKSgRypeVa8ql5RVD1S5WvOqqcgtoIHVNXHG3rc+gXRxvkbiFxy5W6rF4bprRSVDm+I2Hos2phLpTl5nU2RqHR0k5LOizLjfVc3S1NVHlz98A781mS1dW5t4mhmtrXWMVuSQ0Xecreirc+5vYgbLRietDruja7/IrKZUVZGsP/ZMGZIBI7MRY7kaXWur4445GtYLEi7tefRZENTJJ44suvIla6WR0sjnPOpKJJmm3h0TXVYcmujJrqXS3Uuga6l0oKN1Ayl0qiBroXQupdAboEoEpCUBcUuZK5yTMrA0YTIqLaIlKKiCtyoeooiqHqlyKiDssLaGYbEGi3cCspwHOcSN1FFJabKkja4G4WUYmtbooosqAaL8lkNA6KKKDGkAD1p6gBtRIByuooqkkumUURlFFFEECZFRBFLqKIIgUVECFKUFEgVPKS6iio//Z'
   },
 ];
 
@@ -114,17 +122,17 @@ const SpecialtyButton = styled(Button)(({ theme, color }) => ({
   padding: theme.spacing(3),
   borderRadius: '20px',
   backgroundColor: 'white',
-  transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  transition: 'all 0.3s ease-in-out',
   '&:hover': {
     transform: 'translateY(-8px)',
     boxShadow: '0 12px 20px rgba(0, 0, 0, 0.15)',
   },
   '& .MuiAvatar-root': {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
     marginBottom: theme.spacing(2),
     backgroundColor: color,
-    transition: 'transform 0.3s ease-in-out',
+    transition: 'all 0.3s ease-in-out',
   },
   '&:hover .MuiAvatar-root': {
     transform: 'scale(1.15)',
@@ -144,6 +152,11 @@ const DoctorImage = styled('img')({
   marginRight: 30,
   border: '5px solid #fff',
   boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)',
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
+  },
 });
 
 const StyledRating = styled(Rating)({
@@ -151,6 +164,12 @@ const StyledRating = styled(Rating)({
     color: '#FFD700',
   },
 });
+
+const InfoChip = styled(Chip)(({ theme }) => ({
+  margin: theme.spacing(0.5),
+  fontWeight: 'bold',
+  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+}));
 
 const DoctorInfo = ({ doctor }) => (
   <Grow in={true} timeout={1000}>
@@ -163,13 +182,10 @@ const DoctorInfo = ({ doctor }) => (
           <Grid item xs>
             <Typography variant="h5" component="h3" gutterBottom fontWeight="bold" color="primary">{doctor.name}</Typography>
             <Typography variant="body1" color="text.secondary" gutterBottom>{doctor.specialty}</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-              <AccessibilityNewIcon color="action" sx={{ mr: 1 }} />
-              <Typography variant="body2" color="text.secondary">{doctor.experience} years of Experience</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <LocalHospitalIcon color="action" sx={{ mr: 1 }} />
-              <Typography variant="body2" color="text.secondary">{doctor.location}</Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+              <InfoChip icon={<AccessibilityNewIcon />} label={`${doctor.experience} years exp.`} color="primary" variant="outlined" />
+              <InfoChip icon={<LocationOnIcon />} label={doctor.location} color="secondary" variant="outlined" />
+              <InfoChip icon={<EventNoteIcon />} label={`${doctor.patientStories} consultations`} color="success" variant="outlined" />
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <StyledRating value={doctor.rating} readOnly size="small" />
@@ -183,19 +199,20 @@ const DoctorInfo = ({ doctor }) => (
             </Button>
           </Grid>
           <Grid item>
+            <Paper elevation={3} sx={{ p: 3, textAlign: 'center', borderRadius: 4, mb: 3 }}>
+              <Typography variant="body1" gutterBottom>Consultation Fee</Typography>
+              <Typography variant="h4" color="primary" fontWeight="bold">₹ {doctor.consultationFee}/-</Typography>
+            </Paper>
             <Button 
               variant="contained" 
               color="secondary" 
               size="large" 
-              sx={{ mb: 3, px: 4, py: 1.5, borderRadius: 30 }}
+              fullWidth
+              sx={{ py: 1.5, borderRadius: 30 }}
               startIcon={<LocalHospitalIcon />}
             >
               Consult Now
             </Button>
-            <Paper elevation={3} sx={{ p: 3, textAlign: 'center', borderRadius: 4 }}>
-              <Typography variant="body1" gutterBottom>Consultation Fee</Typography>
-              <Typography variant="h4" color="primary" fontWeight="bold">₹ {doctor.consultationFee}/-</Typography>
-            </Paper>
           </Grid>
         </Grid>
       </CardContent>
@@ -210,9 +227,9 @@ const Home = () => {
       <Container maxWidth="lg" sx={{ py: 8 }}>
         <Grid container spacing={6} alignItems="center" sx={{ mb: 10 }}>
           <Grid item xs={12} md={6}>
-            <Zoom in={true} timeout={1000}>
+            <Fade in={true} timeout={1000}>
               <Box sx={{ textAlign: 'left' }}>
-                <Typography variant="h2" component="h1" gutterBottom fontWeight="bold" color="primary">
+                <Typography variant="h2" component="h1" gutterBottom fontWeight="bold" color="primary" sx={{ mb: 2 }}>
                   Skip the travel!
                 </Typography>
                 <Typography variant="h4" gutterBottom color="text.secondary" sx={{ mb: 3 }}>
@@ -259,10 +276,26 @@ const Home = () => {
                   <Typography variant="body1" fontWeight="medium">1400+ doctors online</Typography>
                 </Box>
               </Box>
-            </Zoom>
+            </Fade>
           </Grid>
           <Grid item xs={12} md={6}>
-            <img src={doctorConsultationImage} alt="Doctor Consultation" style={{ width: '100%', maxHeight: '350px', objectFit: 'contain' }} />
+            <Zoom in={true} timeout={1000}>
+              <Box sx={{ position: 'relative', height: '400px', overflow: 'hidden', borderRadius: '20px' }}>
+                <img src={doctorConsultationImage} alt="Doctor Consultation" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Box sx={{ 
+                  position: 'absolute', 
+                  bottom: 0, 
+                  left: 0, 
+                  right: 0, 
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)',
+                  p: 3,
+                  color: 'white'
+                }}>
+                  <Typography variant="h5" fontWeight="bold">Consult with Top Doctors</Typography>
+                  <Typography variant="body1">Anytime, Anywhere</Typography>
+                </Box>
+              </Box>
+            </Zoom>
           </Grid>
         </Grid>
 
