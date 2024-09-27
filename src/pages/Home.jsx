@@ -18,7 +18,7 @@ import {
   Grow,
   InputAdornment,
   TextField,
-  Fade
+  Fade,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
@@ -33,6 +33,7 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import MoodIcon from '@mui/icons-material/Mood';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EventNoteIcon from '@mui/icons-material/EventNote';
+import { Link ,Navigate} from 'react-router-dom';
 import doctorConsultationImage from '../assets/imagePro.png';
 
 const theme = createTheme({
@@ -101,7 +102,7 @@ const doctors = [
     rating: 4.6, 
     patientStories: 1141, 
     consultationFee: 499,
-    image: 'data:image/jpeg;base64,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'
+    image: '/api/placeholder/150/150'
   },
   { 
     name: 'Dr. Rahul Gupta', 
@@ -111,7 +112,7 @@ const doctors = [
     rating: 4.7, 
     patientStories: 1299, 
     consultationFee: 499,
-    image: 'data:image/jpeg;base64,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'
+    image: '/api/placeholder/150/150'
   },
 ];
 
@@ -221,6 +222,7 @@ const DoctorInfo = ({ doctor }) => (
 );
 
 const Home = () => {
+    
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -302,7 +304,14 @@ const Home = () => {
         <Box sx={{ mb: 10 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
             <Typography variant="h3" fontWeight="bold">25+ Specialties</Typography>
-            <Button endIcon={<ChevronRightIcon />} color="primary" variant="outlined" size="large">
+            <Button 
+              component={Link}
+              to="/specialties"
+              endIcon={<ChevronRightIcon />} 
+              color="primary" 
+              variant="outlined" 
+              size="large"
+            >
               View all
             </Button>
           </Box>
@@ -331,7 +340,13 @@ const Home = () => {
           {doctors.map((doctor, index) => (
             <DoctorInfo key={index} doctor={doctor} />
           ))}
-          <Button variant="outlined" fullWidth size="large" sx={{ mt: 4, py: 2, borderRadius: 30 }}>
+          <Button variant="outlined" fullWidth size="large" sx={{ mt: 4, py: 2, borderRadius: 30 }}
+            component={Link}
+            to="/showalldoctors"
+            endIcon={<ChevronRightIcon />} 
+            color="primary" 
+        
+          >
             SHOW MORE DOCTORS
           </Button>
         </Box>
