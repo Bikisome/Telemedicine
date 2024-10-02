@@ -1,4 +1,3 @@
-import React from "react";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import Logo from "../assets/logo2.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -23,12 +22,12 @@ function Header() {
                 <Link>More</Link>
               </div>
               {/* User */}
-              <div className="">
+              <div className=" gap-3 flex">
+                <Link to={"/login"}>Login</Link>
                 <Link to={"/login"}>
-                <AccountCircleIcon />
-              </Link>
+                  <AccountCircleIcon />
+                </Link>
               </div>
-              
             </div>
           </Typography>
         </Toolbar>

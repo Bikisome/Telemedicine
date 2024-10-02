@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import SpecialtiesPage from "./pages/SpecialtiesPage ";
 import ShowAllDrs from "./pages/ShowAllDrs";
 import "./App.css";
+import LogIn from "./pages/Login";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/specialties" element={<SpecialtiesPage />} />
         <Route path="/showalldoctors" element={<ShowAllDrs />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn />} />
       </Routes>
     </Layout>
   );
