@@ -16,6 +16,7 @@ function App() {
         <Route path="/showalldoctors" element={<ShowAllDrs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
+        {/* changed by hitesh kumar */}
       </Routes>
     </Layout>
   );
