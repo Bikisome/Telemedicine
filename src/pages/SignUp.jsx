@@ -1,18 +1,47 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import { register } from "../redux/store/slices/auth";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+
+    onSubmit: async (values) => {
+      console.log("Values are :", values);
+      const { firstName, lastName, email, password } = values;
+
+      const data = { firstName, lastName, email, password };
+
+      console.log("user data :", data);
+
+      let result = await dispatch(register(data));
+
+      if (result) {
+        console.log("User registered successfully");
+        navigate("/login");
+      }
+    },
+  });
+
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
       }}
       className="px-[30px] flex-col "
     >
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <Box
           className="Main_box"
           sx={{ width: { lg: "460px", md: "460px", sm: "460px", xs: "100%" } }}
@@ -34,6 +63,9 @@ const SignUp = () => {
               label="First Name"
               name="firstName"
               variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.firstName}
               required={true}
             />
             <TextField
@@ -42,6 +74,9 @@ const SignUp = () => {
               label="Last Name"
               name="lastName"
               variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.lastName}
               required={true}
             />
 
@@ -51,6 +86,9 @@ const SignUp = () => {
               label="Email"
               name="email"
               type={"email"}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
               required
               variant="outlined"
             />
@@ -62,6 +100,9 @@ const SignUp = () => {
               type={"password"}
               required
               variant="outlined"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
               style={{ marginTop: "40px" }}
             />
           </div>
