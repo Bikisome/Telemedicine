@@ -17,6 +17,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         {/* changed by hitesh kumar */}
+        {/* changed by alok ranjan  */}
       </Routes>
     </Layout>
   );
