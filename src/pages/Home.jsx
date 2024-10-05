@@ -209,6 +209,8 @@ const DoctorInfo = ({ doctor }) => (
               color="secondary" 
               size="large" 
               fullWidth
+               component={Link}
+            to="/consultnow"
               sx={{ py: 1.5, borderRadius: 30 }}
               startIcon={<LocalHospitalIcon />}
             >
