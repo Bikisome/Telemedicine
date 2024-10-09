@@ -9,11 +9,12 @@ class AuthApi {
         {
           method: "get",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("acessToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
-      if (response.data.status == "SUCCESS") {
+
+      if (response.data.status === "SUCCESS") {
         return response.data;
       }
     } catch (error) {
@@ -22,15 +23,12 @@ class AuthApi {
   }
 
   async register(data) {
-    console.log("data in mocks :", data);
     try {
       const response = await axios.post(
         // eslint-disable-next-line no-undef
         `${process.env.REACT_APP_HOST}/userapp/auth/register`,
         data
       );
-
-      console.log("response in mocks :", response);
 
       if (response.data.status === "SUCCESS") {
         return response.data;
@@ -57,6 +55,25 @@ class AuthApi {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async updateUser(id, data) {
+    try {
+      const response = await axios.put(
+        // eslint-disable-next-line no-undef
+        `${process.env.REACT_APP_HOST}/userapp/user/update/${id}`,
+        data,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log("error", error);
     }
   }
 }
