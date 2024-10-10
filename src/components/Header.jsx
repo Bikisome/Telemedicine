@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import Logo from "../assets/logo2.png";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import { Link } from "react-router-dom";
 import Headroom from "react-headroom";
 import { useDispatch, useSelector } from "react-redux";

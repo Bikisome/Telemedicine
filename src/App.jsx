@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import SpecialtiesPage from "./pages/SpecialtiesPage ";
 import ShowAllDrs from "./pages/ShowAllDrs";
 import "./App.css";
-import LogIn from "./pages/Login";
+import LogIn from "./pages/Login.jsx";
 import SignUp from "./pages/SignUp";
 import ConsultationBooking from "./pages/ConsultationBooking";
 import UserProfile from "./pages/UserProfile";
