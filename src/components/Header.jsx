@@ -50,7 +50,7 @@ function Header() {
                     alignItems: "center",
                   }}
                 >
-                  <Link to="/sign-up">Login</Link>
+                  <Link to="/login">Login</Link>
                 </Box>
                 <Box
                   sx={{
@@ -58,7 +58,7 @@ function Header() {
                     alignItems: "center",
                   }}
                 >
-                  <Link to={"/profile"}>Welcome ! {user?.firstName}</Link>
+                  <Link to={""}>Welcome ! {user?.firstName}</Link>
                 </Box>
                 <Link to={"/login"}>
                   <AccountCircleIcon />
