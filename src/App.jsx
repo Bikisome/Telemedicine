@@ -7,6 +7,7 @@ import "./App.css";
 import LogIn from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ConsultationBooking from "./pages/ConsultationBooking";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
         <Route path="/showalldoctors" element={<ShowAllDrs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="/consultnow" element={<ConsultationBooking/>}></Route>
-      
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/consultnow" element={<ConsultationBooking />}></Route>
       </Routes>
     </Layout>
   );

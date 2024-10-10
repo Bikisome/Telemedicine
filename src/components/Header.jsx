@@ -6,6 +6,7 @@ import Headroom from "react-headroom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/store/slices/auth";
 import { useEffect } from "react";
+import UserProfile from "../pages/UserProfile";
 
 function Header() {
   const dispatch = useDispatch();
@@ -60,8 +61,8 @@ function Header() {
                 >
                   <Link to={""}>Welcome ! {user?.firstName}</Link>
                 </Box>
-                <Link to={"/login"}>
-                  <AccountCircleIcon />
+                <Link to={""}>
+                  <UserProfile />
                 </Link>
               </div>
             </div>
