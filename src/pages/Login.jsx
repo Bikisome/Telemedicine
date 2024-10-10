@@ -1,10 +1,12 @@
 import { Box, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/store/slices/auth";
+import toast from "react-hot-toast";
 
 const LogIn = () => {
-  // const despatch = useDispatch();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -14,6 +16,18 @@ const LogIn = () => {
 
     onSubmit: async (values) => {
       console.log("Values are :", values);
+      const { username, password } = values;
+      const data = { username, password };
+
+      let result = await dispatch(login(data));
+
+      if (result) {
+        localStorage.setItem("accessToken", result.token);
+        console.log("Login Successfull");
+        toast.success("Login successful!");
+      } else {
+        toast.error("Incorrect username or password");
+      }
     },
   });
 

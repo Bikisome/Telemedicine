@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../redux/store/slices/auth";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,10 @@ const SignUp = () => {
       let result = await dispatch(register(data));
 
       if (result) {
-        console.log("User registered successfully");
+        toast.success("Registration Successful!");
         navigate("/login");
+      } else {
+        toast.error("Registration Failed!");
       }
     },
   });
