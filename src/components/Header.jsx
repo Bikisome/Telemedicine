@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import Logo from "../assets/logo2.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
@@ -18,9 +18,8 @@ function Header() {
 
     if (result) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
 
   useEffect(() => {
@@ -45,7 +44,22 @@ function Header() {
               </div>
               {/* User */}
               <div className=" gap-3 flex">
-                <Link to={"/login"}>Login</Link>
+                <Box
+                  sx={{
+                    display: Object.keys(user).length === 0 ? "flex" : "none",
+                    alignItems: "center",
+                  }}
+                >
+                  <Link to="/sign-up">Login</Link>
+                </Box>
+                <Box
+                  sx={{
+                    display: Object.keys(user).length === 0 ? "none" : "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Link to={"/profile"}>Welcome ! {user?.firstName}</Link>
+                </Box>
                 <Link to={"/login"}>
                   <AccountCircleIcon />
                 </Link>
