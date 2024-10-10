@@ -4,10 +4,6 @@ class AuthApi {
   async getUser() {
     try {
       const response = await axios.get(
-<<<<<<< HEAD
-       
-=======
->>>>>>> bimlesh
         `http://localhost:5003/userapp/user/me`,
         {
           method: "get",

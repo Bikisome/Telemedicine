@@ -3,10 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/store/slices/auth";
-<<<<<<< HEAD
-=======
 import toast from "react-hot-toast";
->>>>>>> bimlesh
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -19,29 +16,19 @@ const LogIn = () => {
     },
 
     onSubmit: async (values) => {
-<<<<<<< HEAD
-      const { username, password } = values;
-
-=======
       console.log("Values are :", values);
       const { username, password } = values;
->>>>>>> bimlesh
       const data = { username, password };
 
       let result = await dispatch(login(data));
 
       if (result) {
-<<<<<<< HEAD
-        alert("user registered successfully");
-        navigate("/");
-=======
         localStorage.setItem("accessToken", result.token);
         console.log("Login Successfull");
         toast.success("Login successful!");
         navigate("/");
       } else {
         toast.error("Incorrect username or password");
->>>>>>> bimlesh
       }
     },
   });
