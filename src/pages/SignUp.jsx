@@ -24,9 +24,11 @@ const SignUp = () => {
       console.log("user data :", data);
 
       let result = await dispatch(register(data));
+      console.log(result, "result");
 
       if (result) {
         console.log("User registered successfully");
+        alert("user registered successfully");
         navigate("/login");
       }
     },

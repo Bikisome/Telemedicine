@@ -3,8 +3,30 @@ import Logo from "../assets/logo2.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import Headroom from "react-headroom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../redux/store/slices/auth";
+import { useEffect } from "react";
 
 function Header() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  console.log("user", user);
+
+  const fetchUser = async () => {
+    let result = await dispatch(getUser());
+
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <Headroom>
       <AppBar position="static" className="h-full w-full p-0 m-0">

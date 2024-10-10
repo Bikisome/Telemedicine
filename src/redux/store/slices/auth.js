@@ -24,6 +24,8 @@ export const { reducer } = slice;
 
 export const getUser = () => async (dispatch) => {
   const result = await authApi.getUser();
+
+
   if (result) {
     await dispatch(slice.actions.getUser(result));
     return true;

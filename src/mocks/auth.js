@@ -4,8 +4,8 @@ class AuthApi {
   async getUser() {
     try {
       const response = await axios.get(
-        // eslint-disable-next-line no-undef
-        `${process.env.REACT_APP_HOST}/userapp/user/me`,
+       
+        `http://localhost:5003/userapp/user/me`,
         {
           method: "get",
           headers: {
@@ -21,31 +21,36 @@ class AuthApi {
       console.log(error);
     }
   }
-
   async register(data) {
     try {
       const response = await axios.post(
-        // eslint-disable-next-line no-undef
-        `${process.env.REACT_APP_HOST}/userapp/auth/register`,
+        `http://localhost:5003/userapp/auth/register`,
         data
       );
+      console.log(response, "response");
 
       if (response.data.status === "SUCCESS") {
-        return response.data;
+        return response?.data;
       } else {
-        return false;
+        return response?.data;
       }
     } catch (error) {
-      console.log(error);
+      console.log(error, "error");
+      alert(error, "error");
     }
   }
 
   async login(data) {
     try {
       const response = await axios.post(
-        // eslint-disable-next-line no-undef
-        `${process.env.REACT_APP_HOST}/userapp/auth/login`,
+        `http://localhost:5003/userapp/auth/login`,
         data
+
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        //   },
+        // }
       );
 
       if (response.data.status === "SUCCESS") {
@@ -61,8 +66,7 @@ class AuthApi {
   async updateUser(id, data) {
     try {
       const response = await axios.put(
-        // eslint-disable-next-line no-undef
-        `${process.env.REACT_APP_HOST}/userapp/user/update/${id}`,
+        `http://localhost:5003/userapp/auth//userapp/user/update/${id}`,
         data,
 
         {

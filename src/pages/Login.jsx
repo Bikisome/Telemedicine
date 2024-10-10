@@ -1,10 +1,12 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/store/slices/auth";
 
 const LogIn = () => {
-  // const despatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -13,7 +15,16 @@ const LogIn = () => {
     },
 
     onSubmit: async (values) => {
-      console.log("Values are :", values);
+      const { username, password } = values;
+
+      const data = { username, password };
+
+      let result = await dispatch(login(data));
+
+      if (result) {
+        alert("user registered successfully");
+        navigate("/");
+      }
     },
   });
 
