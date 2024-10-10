@@ -28,12 +28,7 @@ const SignUp = () => {
       console.log(result, "result");
 
       if (result) {
-<<<<<<< HEAD
-        console.log("User registered successfully");
-        alert("user registered successfully");
-=======
         toast.success("Registration Successful!");
->>>>>>> bimlesh
         navigate("/login");
       } else {
         toast.error("Registration Failed!");
