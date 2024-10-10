@@ -6,6 +6,7 @@ import ShowAllDrs from "./pages/ShowAllDrs";
 import "./App.css";
 import LogIn from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import ConsultationBooking from "./pages/ConsultationBooking";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/showalldoctors" element={<ShowAllDrs />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/consultnow" element={<ConsultationBooking/>}></Route>
+      
       </Routes>
     </Layout>
   );

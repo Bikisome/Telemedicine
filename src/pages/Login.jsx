@@ -1,5 +1,5 @@
 import { Box, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/store/slices/auth";
@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 const LogIn = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -25,6 +26,7 @@ const LogIn = () => {
         localStorage.setItem("accessToken", result.token);
         console.log("Login Successfull");
         toast.success("Login successful!");
+        navigate("/");
       } else {
         toast.error("Incorrect username or password");
       }

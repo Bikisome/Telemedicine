@@ -1,10 +1,31 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 import Logo from "../assets/logo2.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import Headroom from "react-headroom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../redux/store/slices/auth";
+import { useEffect } from "react";
 
 function Header() {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  console.log("user", user);
+
+  const fetchUser = async () => {
+    let result = await dispatch(getUser());
+
+    if (result) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <Headroom>
       <AppBar position="static" className="h-full w-full p-0 m-0">
@@ -23,7 +44,22 @@ function Header() {
               </div>
               {/* User */}
               <div className=" gap-3 flex">
-                <Link to={"/login"}>Login</Link>
+                <Box
+                  sx={{
+                    display: Object.keys(user).length === 0 ? "flex" : "none",
+                    alignItems: "center",
+                  }}
+                >
+                  <Link to="/sign-up">Login</Link>
+                </Box>
+                <Box
+                  sx={{
+                    display: Object.keys(user).length === 0 ? "none" : "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Link to={"/profile"}>Welcome ! {user?.firstName}</Link>
+                </Box>
                 <Link to={"/login"}>
                   <AccountCircleIcon />
                 </Link>

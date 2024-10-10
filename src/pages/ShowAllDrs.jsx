@@ -113,7 +113,7 @@ const doctors = [
     image: '/api/placeholder/150/150'
   },
   { 
-    name: 'Dr. Neha Reddy', 
+    name: 'Dr. Neha Reddy',
     specialty: 'MBBS, MD - Dermatology', 
     experience: 7, 
     location: 'Skin Care Clinic, Hyderabad', 
