@@ -352,6 +352,86 @@ const Home = () => {
             SHOW MORE DOCTORS
           </Button>
         </Box>
+        <Box sx={{ mt: 10 }}>
+          <Typography variant="h3" gutterBottom fontWeight="bold" sx={{ mb: 6 }}>
+            Why Choose Online Consultation?
+          </Typography>
+          <Grid container spacing={4}>
+            {[
+              {
+                title: "24/7 Availability",
+                description: "Connect with doctors anytime, anywhere",
+                icon: <AccessibilityNewIcon sx={{ fontSize: 40 }} />
+              },
+              {
+                title: "Expert Doctors",
+                description: "Consult with experienced specialists",
+                icon: <LocalHospitalIcon sx={{ fontSize: 40 }} />
+              },
+              {
+                title: "Affordable Prices",
+                description: "Quality healthcare at reasonable rates",
+                icon: <FavoriteIcon sx={{ fontSize: 40 }} />
+              }
+            ].map((benefit, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Zoom in={true} style={{ transitionDelay: `${index * 100}ms` }}>
+                  <Paper
+                    sx={{
+                      p: 4,
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      borderRadius: 4,
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: '0 12px 20px rgba(0, 0, 0, 0.15)',
+                      }
+                    }}
+                  >
+                    <Avatar
+                      sx={{
+                        width: 80,
+                        height: 80,
+                        bgcolor: 'primary.main',
+                        mb: 2
+                      }}
+                    >
+                      {benefit.icon}
+                    </Avatar>
+                    <Typography variant="h5" gutterBottom fontWeight="bold">
+                      {benefit.title}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary">
+                      {benefit.description}
+                    </Typography>
+                  </Paper>
+                </Zoom>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Safety Message */}
+        <Box 
+          sx={{ 
+            mt: 10, 
+            p: 4, 
+            borderRadius: 4, 
+            bgcolor: 'primary.light',
+            color: 'primary.contrastText'
+          }}
+        >
+          <Typography variant="h5" gutterBottom fontWeight="bold" align="center">
+            Your Health & Safety is Our Priority
+          </Typography>
+          <Typography variant="body1" align="center">
+            All our doctors are verified professionals. Your personal information is 100% secure with us.
+          </Typography>
+        </Box>
       </Container>
     </ThemeProvider>
   );
