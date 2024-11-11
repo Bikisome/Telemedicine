@@ -431,6 +431,7 @@ const Home = () => {
           <Typography variant="body1" align="center">
             All our doctors are verified professionals. Your personal information is 100% secure with us.
           </Typography>
+          <h1>just</h1>
         </Box>
       </Container>
     </ThemeProvider>
