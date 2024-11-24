@@ -13,7 +13,7 @@ container:element,
 sharedLinks:[
     {
         name:'copy Link',
-        url:`http://localhost:3000/room/${roomId}`
+        url:`http:/localhost:5173/room/${roomId}`
     }
 ],
 scenario:{
