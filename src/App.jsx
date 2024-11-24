@@ -10,6 +10,8 @@ import ConsultationBooking from "./pages/ConsultationBooking";
 import UserProfile from "./pages/UserProfile";
 import ShowHaridwardrs from "./pages/ShowHaridwardrs.jsx";
 import DoctorProfile from './pages/DoctorProfile.jsx'
+import HomePage from "./pages/HomePage.jsx";
+import RoomPage from "./pages/RoomPage.jsx";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
         <Route path="/consultnow" element={<ConsultationBooking />}></Route>
         <Route path="/drprofile" element={<DoctorProfile />}></Route>
         <Route path="/drprofile/consultnow" element={<ConsultationBooking />}></Route>
+       
 
       </Routes>
     </Layout>
