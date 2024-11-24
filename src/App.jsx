@@ -27,7 +27,8 @@ function App() {
         <Route path="/consultnow" element={<ConsultationBooking />}></Route>
         <Route path="/drprofile" element={<DoctorProfile />}></Route>
         <Route path="/drprofile/consultnow" element={<ConsultationBooking />}></Route>
-       
+        <Route path="/joinmeeting" element={<HomePage />} />
+        <Route path="/room/:roomId" element={<RoomPage />} />
 
       </Routes>
     </Layout>

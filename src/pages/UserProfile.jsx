@@ -1,3 +1,4 @@
+
 import { Menu } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -30,11 +32,15 @@ const UserProfile = () => {
     console.log(result);
     if (result) {
       localStorage.removeItem("accessToken", "");
-
       navigate("/");
       toast.success("Logout successful");
       return true;
     }
+  };
+
+  const handleAppointmentClick = () => {
+    handleClose();
+    navigate('/joinmeeting');
   };
 
   return (
@@ -46,7 +52,7 @@ const UserProfile = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
-          className=" p-0"
+          className="p-0"
         >
           <AccountCircleIcon className="text-2xl" />
         </div>
@@ -75,18 +81,18 @@ const UserProfile = () => {
                 </h3>
                 <div className="flex justify-evenly flex-col pt-8 gap-5">
                   <Link className="flex gap-2 items-center">
-                    {" "}
                     <MdOutlineManageAccounts /> <p>My Account</p>
                   </Link>
 
-                  <Link className="flex gap-2 items-center">
-                    {" "}
+                  <div 
+                    className="flex gap-2 items-center cursor-pointer" 
+                    onClick={handleAppointmentClick}
+                  >
                     <FaHandsHelping />
-                    <p> Appointments</p>
-                  </Link>
+                    <p>Appointments</p>
+                  </div>
 
                   <Link className="flex gap-2 items-center">
-                    {" "}
                     <FaUserDoctor />
                     <p>View Consults</p>
                   </Link>
