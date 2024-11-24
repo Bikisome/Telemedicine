@@ -33,8 +33,10 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import MoodIcon from '@mui/icons-material/Mood';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EventNoteIcon from '@mui/icons-material/EventNote';
-import { Link ,Navigate} from 'react-router-dom';
+import { Link ,Navigate,useNavigate } from 'react-router-dom';
 import doctorConsultationImage from '../assets/imagePro.png';
+import ShowHaridwardrs from './ShowHaridwardrs';
+
 
 const theme = createTheme({
   palette: {
@@ -224,6 +226,11 @@ const DoctorInfo = ({ doctor }) => (
 );
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleFindDoctor = () => {
+    navigate('/showalldoctorsinHaridwar');
+  };
     
   return (
     <ThemeProvider theme={theme}>
@@ -258,6 +265,7 @@ const Home = () => {
                           variant="contained" 
                           color="primary" 
                           size="large"
+                          onClick={handleFindDoctor}
                           sx={{ 
                             borderRadius: '0 30px 30px 0',
                             height: '100%',
@@ -329,7 +337,8 @@ const Home = () => {
                       {specialty.icon}
                     </Avatar>
                     <Typography variant="body1" fontWeight="medium">{specialty.name}</Typography>
-                    <Chip label="Find Doctors" size="small" sx={{ mt: 2 }} color="primary" />
+                    <Chip label="Find Doctors"   component={Link}
+            to="/showalldoctors" size="small" sx={{ mt: 2 }} color="primary" />
                   </SpecialtyButton>
                 </Zoom>
               </Grid>
@@ -431,7 +440,7 @@ const Home = () => {
           <Typography variant="body1" align="center">
             All our doctors are verified professionals. Your personal information is 100% secure with us.
           </Typography>
-          <h1>just</h1>
+         
         </Box>
       </Container>
     </ThemeProvider>

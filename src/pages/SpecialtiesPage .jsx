@@ -20,6 +20,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { motion } from 'framer-motion';
+import ShowAllDrs from './ShowAllDrs';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -85,6 +86,8 @@ const SpecialtyChip = styled(Chip)(({ theme }) => ({
 
 const SpecialtiesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+
   const specialties = [
     { name: 'Gynecologist', availableDoctors: '500+ available Doctors', color: '#FF69B4' },
     { name: 'Cardiologist', availableDoctors: '300+ available Doctors', color: '#FF6347' },
@@ -98,6 +101,18 @@ const SpecialtiesPage = () => {
   const filteredSpecialties = specialties.filter(specialty =>
     specialty.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleSpecialtyClick = (specialty) => {
+    setSelectedSpecialty(specialty);
+  };
+
+  const handleBack = () => {
+    setSelectedSpecialty(null);
+  };
+
+  if (selectedSpecialty) {
+    return <ShowAllDrs specialty={selectedSpecialty} onBack={handleBack} />;
+  }
 
   return (
     <Box sx={{ bgcolor: '#EBE5FC', minHeight: '100vh', py: 6 }}>
@@ -156,6 +171,8 @@ const SpecialtiesPage = () => {
                   component={motion.div}
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
+                  onClick={() => handleSpecialtyClick(specialty)}
+                  sx={{ cursor: 'pointer' }}
                 >
                   <Avatar sx={{ bgcolor: specialty.color, mr: 2 }}>
                     <LocalHospitalIcon />
@@ -175,7 +192,7 @@ const SpecialtiesPage = () => {
                       </Box>
                     }
                   />
-                  <ChevronRightIcon color="action" />
+                  <ChevronRightIcon color="action"/>
                 </StyledListItem>
               </Zoom>
             ))}
