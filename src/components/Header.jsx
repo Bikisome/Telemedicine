@@ -59,9 +59,9 @@ function Header() {
                     alignItems: "center",
                   }}
                 >
-                  <Link to={""}>Welcome ! {user?.firstName}</Link>
+                  <Link >Welcome ! {user?.firstName}</Link>
                 </Box>
-                <Link to={""}>
+                <Link>
                   <UserProfile />
                 </Link>
               </div>

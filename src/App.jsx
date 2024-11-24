@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import SpecialtiesPage from "./pages/SpecialtiesPage ";
 import ShowAllDrs from "./pages/ShowAllDrs";
 import "./App.css";
-import LogIn from "./pages/Login.jsx";
+import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import ConsultationBooking from "./pages/ConsultationBooking";
 import UserProfile from "./pages/UserProfile";
+import ShowHaridwardrs from "./pages/ShowHaridwardrs.jsx";
+import DoctorProfile from './pages/DoctorProfile.jsx'
 
 function App() {
   return (
@@ -16,10 +18,14 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/specialties" element={<SpecialtiesPage />} />
         <Route path="/showalldoctors" element={<ShowAllDrs />} />
+        <Route path="/showalldoctorsinHaridwar" element={<ShowHaridwardrs/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/consultnow" element={<ConsultationBooking />}></Route>
+        <Route path="/drprofile" element={<DoctorProfile />}></Route>
+        <Route path="/drprofile/consultnow" element={<ConsultationBooking />}></Route>
+
       </Routes>
     </Layout>
   );

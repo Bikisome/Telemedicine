@@ -46,9 +46,9 @@ const UserProfile = () => {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           onClick={handleClick}
-          className="text-black center p-0"
+          className=" p-0"
         >
-          <AccountCircleIcon />
+          <AccountCircleIcon className="text-2xl" />
         </div>
         <Menu
           PaperProps={{
