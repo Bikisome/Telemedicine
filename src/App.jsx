@@ -24,6 +24,7 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />} />
         <Route path="/consultnow" element={<ConsultationBooking />}></Route>
         <Route path="/drprofile" element={<DoctorProfile />}></Route>
+        <Route path="/drprofile/consultnow" element={<ConsultationBooking />}></Route>
 
       </Routes>
     </Layout>

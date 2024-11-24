@@ -36,6 +36,7 @@ import EventNoteIcon from '@mui/icons-material/EventNote';
 import { Link ,Navigate,useNavigate } from 'react-router-dom';
 import doctorConsultationImage from '../assets/imagePro.png';
 import ShowHaridwardrs from './ShowHaridwardrs';
+import DoctorProfile from './DoctorProfile';
 
 
 const theme = createTheme({
@@ -197,9 +198,16 @@ const DoctorInfo = ({ doctor }) => (
                 ({doctor.patientStories} Patient Stories)
               </Typography>
             </Box>
-            <Button color="primary" variant="outlined" sx={{ mt: 1, borderRadius: 20 }} endIcon={<ChevronRightIcon />}>
-              View Full Profile
-            </Button>
+            <Button 
+                color="primary" 
+                variant="outlined" 
+                sx={{ mt: 1, borderRadius: 20 }} 
+                endIcon={<ChevronRightIcon />}
+                   component={Link}
+            to="/drprofile"
+              >
+                View Full Profile
+              </Button>
           </Grid>
           <Grid item>
             <Paper elevation={3} sx={{ p: 3, textAlign: 'center', borderRadius: 4, mb: 3 }}>
@@ -231,7 +239,12 @@ const Home = () => {
   const handleFindDoctor = () => {
     navigate('/showalldoctorsinHaridwar');
   };
-    
+
+  const handleViewProfile = () => {
+    navigate('/drprofile');
+  };
+
+ 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
