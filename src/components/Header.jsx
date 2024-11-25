@@ -38,7 +38,7 @@ function Header() {
                 <img className="h-[70px] w-[70px]" src={Logo} alt="logo" />
               </Link>
               <div className="hidden  lg:gap-6 md:items-center md:flex flex-wrap">
-                <Link to={"/showalldoctors"}>Talk to Doctor</Link>
+                <Link to={"/joinmeeting"}>Talk to Doctor</Link>
                 <Link>Medicine</Link>
                 <Link to={"/specialties"}>Book Dr. Appointment</Link>
                 <Link>More</Link>

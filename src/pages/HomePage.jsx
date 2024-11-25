@@ -70,7 +70,7 @@ const HomePage = () => {
             >
               <div className="bg-black rounded-xl p-4 transition-all duration-300 group-hover:bg-transparent">
                 <div className="flex items-center justify-center space-x-2">
-                  <span className="text-lg font-semibold text-white">Enter the Experience</span>
+                  <span className="text-lg font-semibold text-white">Talk to Our Doctors</span>
                   <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>

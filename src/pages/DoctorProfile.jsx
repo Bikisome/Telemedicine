@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Home, GraduationCap, Search, Star, Heart, MapPin, Clock, Phone, Calendar } from 'lucide-react';
+import {
+  Grid
+} from '@mui/material'
+import { styled } from '@mui/material/styles';
 
 const DoctorProfile = () => {
   const [isLiked, setIsLiked] = useState(false);
   
   const doctor = {
-    name: "Dr. Sarah Johnson",
+    name: "Dr. Akshay Chordla",
     qualifications: "MBBS, DPM - Psychiatry",
     languages: ["English", "Hindi", "Telugu"],
     rating: 4.2,
@@ -13,11 +17,12 @@ const DoctorProfile = () => {
     experience: "8 yrs",
     availableTime: "Mon - Sat, 10:00 AM - 6:00 PM",
     phone: "+1 (555) 123-4567",
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnfLh2yqT16aVBNL3xMq1XR_iCDQ35sVYwt9Hsdrrm9BImqLqIyfXV1Yg&s',
     clinic: {
       name: "Healthcare Medical Center",
       address: "01 Medical Plaza, Healthcare District, Near Central Hospital, New York, NY 10001"
     },
-    about: "Dr. Sarah Johnson is an expert and experienced Psychiatrist with an experience of 8 years. The doctor specializes in Psychological Health Disorders, Mental Health Disorders, Menstruation Issues, Safe Sexual Practices, Sexuality etc.",
+    about: "Dr. Akshay Chordla is an expert and experienced Psychiatrist with an experience of 8 years. The doctor specializes in Psychological Health Disorders, Mental Health Disorders, Menstruation Issues, Safe Sexual Practices, Sexuality etc.",
     specialization: ["Mental Health", "Psychological Care", "Anxiety", "Depression", "Relationship Counseling"],
     education: [
       {
@@ -32,6 +37,20 @@ const DoctorProfile = () => {
       }
     ]
   };
+  const DoctorImage = styled('img')({
+    width: 140,
+    height: 140,
+    borderRadius: '50%',
+    objectFit: 'cover',
+    marginRight: 30,
+    border: '5px solid #fff',
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.15)',
+    transition: 'all 0.3s ease-in-out',
+    '&:hover': {
+      transform: 'scale(1.05)',
+      boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)',
+    },
+  });
 
   return (
     <div className="max-w-3xl mx-auto p-4 bg-gradient-to-br from-purple-50 to-blue-50 min-h-screen">
@@ -41,7 +60,9 @@ const DoctorProfile = () => {
           <div className="relative group cursor-pointer">
             <div className="absolute inset-0 bg-blue-200 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center relative transform transition-all duration-300 group-hover:scale-105 group-hover:rotate-3">
-              <div className="text-4xl transform group-hover:scale-110 transition-transform duration-300">👩‍⚕️</div>
+            <Grid item>
+            <DoctorImage src={doctor.image} alt={doctor.name} />
+          </Grid>
             </div>
           </div>
           
