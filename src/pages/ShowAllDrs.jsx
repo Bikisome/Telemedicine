@@ -201,6 +201,7 @@ const ShowAllDrs = () => {
                 <em>Sort By</em>
               </MenuItem>
               <MenuItem value="rating">Rating</MenuItem>
+              <MenuItem value="distance">Distance</MenuItem>
               <MenuItem value="experience">Experience</MenuItem>
               <MenuItem value="fee">Consultation Fee</MenuItem>
             </Select>
