@@ -85,7 +85,7 @@ const UserProfile = () => {
                     <p> Appointments</p>
                   </Link>
 
-                  <Link className="flex gap-2 items-center">
+                  <Link className="flex gap-2 items-center" to={"/consulthistory"}>
                     {" "}
                     <FaUserDoctor />
                     <p>View Consults</p>
