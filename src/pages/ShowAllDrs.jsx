@@ -21,6 +21,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Link } from 'react-router-dom';
 
 const DoctorCard = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(4),
@@ -248,6 +249,8 @@ const ShowAllDrs = () => {
                     fullWidth
                     sx={{ py: 1.5, borderRadius: 30 }}
                     startIcon={<LocalHospitalIcon />}
+                       component={Link}
+                     to="/showalldoctors/consultnow"
                   >
                     Consult Now
                   </Button>

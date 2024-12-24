@@ -32,7 +32,7 @@ function App() {
         <Route path="/joinmeeting" element={<HomePage />} />
         <Route path="/room/:roomId" element={<RoomPage />} />
         <Route path="/consulthistory" element={<PreviousConsults/>} />
-
+        <Route path="/showalldoctors/consultnow" element={<ConsultationBooking/>} />
         <Route path="/buymedicine" element={<MedicalEcommerce />}/>
 
       </Routes>
