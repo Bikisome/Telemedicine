@@ -12,6 +12,8 @@ import ShowHaridwardrs from "./pages/ShowHaridwardrs.jsx";
 import DoctorProfile from './pages/DoctorProfile.jsx'
 import HomePage from "./pages/HomePage.jsx";
 import RoomPage from "./pages/RoomPage.jsx";
+import PreviousConsults from "./pages/PrevConsults.jsx";
+import MedicalEcommerce from "./components/MedicalEcommerce.jsx";
 
 function App() {
   return (
@@ -29,6 +31,9 @@ function App() {
         <Route path="/drprofile/consultnow" element={<ConsultationBooking />}></Route>
         <Route path="/joinmeeting" element={<HomePage />} />
         <Route path="/room/:roomId" element={<RoomPage />} />
+        <Route path="/consulthistory" element={<PreviousConsults/>} />
+        <Route path="/showalldoctors/consultnow" element={<ConsultationBooking/>} />
+        <Route path="/buymedicine" element={<MedicalEcommerce />}/>
 
       </Routes>
     </Layout>

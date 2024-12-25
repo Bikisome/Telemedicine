@@ -39,7 +39,7 @@ function Header() {
               </Link>
               <div className="hidden  lg:gap-6 md:items-center md:flex flex-wrap">
                 <Link to={"/joinmeeting"}>Talk to Doctor</Link>
-                <Link>Medicine</Link>
+                <Link to ={"/buymedicine"}>Medicine</Link>
                 <Link to={"/specialties"}>Book Dr. Appointment</Link>
                 <Link>More</Link>
               </div>
