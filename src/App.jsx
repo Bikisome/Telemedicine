@@ -14,6 +14,7 @@ import HomePage from "./pages/HomePage.jsx";
 import RoomPage from "./pages/RoomPage.jsx";
 import PreviousConsults from "./pages/PrevConsults.jsx";
 import MedicalEcommerce from "./components/MedicalEcommerce.jsx";
+import TopHospital from "./pages/TopHospital.jsx";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/consulthistory" element={<PreviousConsults/>} />
         <Route path="/showalldoctors/consultnow" element={<ConsultationBooking/>} />
         <Route path="/buymedicine" element={<MedicalEcommerce />}/>
+        <Route path="/hospitals" element={<TopHospital />}/>
 
       </Routes>
     </Layout>

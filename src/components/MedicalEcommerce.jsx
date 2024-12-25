@@ -136,7 +136,7 @@ const beautyProducts = [
     category: "Skincare",
     brand: "LUPIN",
     description: "Hydrating face serum",
-    inStock: false,
+    inStock: true,
     bestSeller: false
   },
   {

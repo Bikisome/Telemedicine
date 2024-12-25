@@ -33,11 +33,10 @@ import PsychologyIcon from '@mui/icons-material/Psychology';
 import MoodIcon from '@mui/icons-material/Mood';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import EventNoteIcon from '@mui/icons-material/EventNote';
-import { Link ,Navigate,useNavigate } from 'react-router-dom';
+import BusinessIcon from '@mui/icons-material/Business';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import doctorConsultationImage from '../assets/imagePro.png';
-import ShowHaridwardrs from './ShowHaridwardrs';
-import DoctorProfile from './DoctorProfile';
-
 
 const theme = createTheme({
   palette: {
@@ -105,7 +104,7 @@ const doctors = [
     rating: 4.6, 
     patientStories: 1141, 
     consultationFee: 499,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnfLh2yqT16aVBNL3xMq1XR_iCDQ35sVYwt9Hsdrrm9BImqLqIyfXV1Yg&s'
+    image: 'https://example.com/doctor1.jpg'
   },
   { 
     name: 'Dr. Rahul Gupta', 
@@ -115,8 +114,41 @@ const doctors = [
     rating: 4.7, 
     patientStories: 1299, 
     consultationFee: 499,
-    image: 'data:image/jpeg;base64,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'
+    image: 'https://example.com/doctor2.jpg'
   },
+];
+
+const hospitals = [
+  {
+    name: "Apollo Hospitals",
+    location: "Delhi NCR",
+    rating: 4.8,
+    specialties: ["Cardiology", "Neurology", "Oncology"],
+    image: "/api/placeholder/400/300",
+    verified: true,
+    doctors: 450,
+    link: "/apollo-hospital"
+  },
+  {
+    name: "Fortis Healthcare",
+    location: "Mumbai",
+    rating: 4.7,
+    specialties: ["Orthopedics", "Pediatrics", "Surgery"],
+    image: "/api/placeholder/400/300",
+    verified: true,
+    doctors: 380,
+    link: "/fortis-hospital"
+  },
+  {
+    name: "Max Healthcare",
+    location: "Bangalore",
+    rating: 4.6,
+    specialties: ["Cardiology", "Gynecology", "Dermatology"],
+    image: "/api/placeholder/400/300",
+    verified: true,
+    doctors: 320,
+    link: "/max-hospital"
+  }
 ];
 
 const SpecialtyButton = styled(Button)(({ theme, color }) => ({
@@ -146,6 +178,17 @@ const SpecialtyButton = styled(Button)(({ theme, color }) => ({
 const DoctorCard = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(4),
   overflow: 'visible',
+}));
+
+const HospitalCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-8px)',
+    boxShadow: '0 12px 20px rgba(0, 0, 0, 0.2)',
+  },
 }));
 
 const DoctorImage = styled('img')({
@@ -184,43 +227,66 @@ const DoctorInfo = ({ doctor }) => (
             <DoctorImage src={doctor.image} alt={doctor.name} />
           </Grid>
           <Grid item xs>
-            <Typography variant="h5" component="h3" gutterBottom fontWeight="bold" color="primary">{doctor.name}</Typography>
-            <Typography variant="body1" color="text.secondary" gutterBottom>{doctor.specialty}</Typography>
+            <Typography variant="h5" component="h3" gutterBottom fontWeight="bold" color="primary">
+              {doctor.name}
+            </Typography>
+            <Typography variant="body1" color="text.secondary" gutterBottom>
+              {doctor.specialty}
+            </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
-              <InfoChip icon={<AccessibilityNewIcon />} label={`${doctor.experience} years exp.`} color="primary" variant="outlined" />
-              <InfoChip icon={<LocationOnIcon />} label={doctor.location} color="secondary" variant="outlined" />
-              <InfoChip icon={<EventNoteIcon />} label={`${doctor.patientStories} consultations`} color="success" variant="outlined" />
+              <InfoChip 
+                icon={<AccessibilityNewIcon />} 
+                label={`${doctor.experience} years exp.`} 
+                color="primary" 
+                variant="outlined" 
+              />
+              <InfoChip 
+                icon={<LocationOnIcon />} 
+                label={doctor.location} 
+                color="secondary" 
+                variant="outlined" 
+              />
+              <InfoChip 
+                icon={<EventNoteIcon />} 
+                label={`${doctor.patientStories} consultations`} 
+                color="success" 
+                variant="outlined" 
+              />
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <StyledRating value={doctor.rating} readOnly size="small" />
-              <Typography variant="body2" fontWeight="bold" sx={{ ml: 1 }}>{doctor.rating}</Typography>
+              <Typography variant="body2" fontWeight="bold" sx={{ ml: 1 }}>
+                {doctor.rating}
+              </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
                 ({doctor.patientStories} Patient Stories)
               </Typography>
             </Box>
             <Button 
-                color="primary" 
-                variant="outlined" 
-                sx={{ mt: 1, borderRadius: 20 }} 
-                endIcon={<ChevronRightIcon />}
-                   component={Link}
-            to="/drprofile"
-              >
-                View Full Profile
-              </Button>
+              color="primary" 
+              variant="outlined" 
+              sx={{ mt: 1, borderRadius: 20 }} 
+              endIcon={<ChevronRightIcon />}
+              component={Link}
+              to="/drprofile"
+            >
+              View Full Profile
+            </Button>
           </Grid>
           <Grid item>
             <Paper elevation={3} sx={{ p: 3, textAlign: 'center', borderRadius: 4, mb: 3 }}>
               <Typography variant="body1" gutterBottom>Consultation Fee</Typography>
-              <Typography variant="h4" color="primary" fontWeight="bold">₹ {doctor.consultationFee}/-</Typography>
+              <Typography variant="h4" color="primary" fontWeight="bold">
+                ₹ {doctor.consultationFee}/-
+              </Typography>
             </Paper>
             <Button 
               variant="contained" 
               color="secondary" 
               size="large" 
               fullWidth
-               component={Link}
-            to="/consultnow"
+              component={Link}
+              to="/consultnow"
               sx={{ py: 1.5, borderRadius: 30 }}
               startIcon={<LocalHospitalIcon />}
             >
@@ -231,6 +297,105 @@ const DoctorInfo = ({ doctor }) => (
       </CardContent>
     </DoctorCard>
   </Grow>
+);
+
+const HospitalSection = () => (
+  <Box sx={{ mt: 10, mb: 10 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+      <Typography variant="h3" fontWeight="bold">Top Hospitals</Typography>
+      <Button 
+        component={Link}
+        to="/hospitals"
+        endIcon={<ChevronRightIcon />} 
+        color="primary" 
+        variant="outlined" 
+        size="large"
+      >
+        View all hospitals
+      </Button>
+    </Box>
+    <Typography variant="h6" gutterBottom color="text.secondary" sx={{ mb: 4 }}>
+      Connect with leading hospitals for advanced medical care
+    </Typography>
+    <Grid container spacing={4}>
+      {hospitals.map((hospital, index) => (
+        <Grid item xs={12} md={4} key={index}>
+          <Zoom in={true} style={{ transitionDelay: `${index * 100}ms` }}>
+            <HospitalCard>
+              <CardContent>
+                <Box sx={{ position: 'relative', mb: 2 }}>
+                  <img 
+                    src={hospital.image} 
+                    alt={hospital.name}
+                    style={{ 
+                      width: '100%', 
+                      height: '200px', 
+                      objectFit: 'cover',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  {hospital.verified && (
+                    <Chip
+                      icon={<VerifiedIcon />}
+                      label="Verified"
+                      color="primary"
+                      sx={{
+                        position: 'absolute',
+                        top: 8,
+                        right: 8,
+                      }}
+                    />
+                  )}
+                </Box>
+                <Typography variant="h5" component="h3" gutterBottom fontWeight="bold">
+                  {hospital.name}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                  <LocationOnIcon color="action" sx={{ mr: 1 }} />
+                  <Typography variant="body2" color="text.secondary">
+                    {hospital.location}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <StarIcon sx={{ color: '#FFD700', mr: 1 }} />
+                  <Typography variant="body2" fontWeight="bold">
+                    {hospital.rating}
+                  </Typography>
+                  <Box sx={{ mx: 2, height: 20, width: 1, bgcolor: 'divider' }} />
+                  <BusinessIcon sx={{ mr: 1 }} />
+                  <Typography variant="body2">
+                    {hospital.doctors}+ Doctors
+                  </Typography>
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  {hospital.specialties.map((specialty, idx) => (
+                    <Chip
+                      key={idx}
+                      label={specialty}
+                      size="small"
+                      sx={{ mr: 1, mb: 1 }}
+                      variant="outlined"
+                    />
+                  ))}
+                </Box>
+                <Button
+                  component={Link}
+                  to={hospital.link}
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ mt: 'auto', borderRadius: 2 }}
+                  endIcon={<ChevronRightIcon />}
+                >
+                  Visit Hospital Portal
+                  </Button>
+              </CardContent>
+            </HospitalCard>
+          </Zoom>
+        </Grid>
+      ))}
+    </Grid>
+  </Box>
 );
 
 const Home = () => {
@@ -244,11 +409,11 @@ const Home = () => {
     navigate('/drprofile');
   };
 
- 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg" sx={{ py: 8 }}>
+        {/* Hero Section */}
         <Grid container spacing={6} alignItems="center" sx={{ mb: 10 }}>
           <Grid item xs={12} md={6}>
             <Fade in={true} timeout={1000}>
@@ -306,7 +471,11 @@ const Home = () => {
           <Grid item xs={12} md={6}>
             <Zoom in={true} timeout={1000}>
               <Box sx={{ position: 'relative', height: '400px', overflow: 'hidden', borderRadius: '20px' }}>
-                <img src={doctorConsultationImage} alt="Doctor Consultation" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img 
+                  src={doctorConsultationImage} 
+                  alt="Doctor Consultation" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                />
                 <Box sx={{ 
                   position: 'absolute', 
                   bottom: 0, 
@@ -324,6 +493,7 @@ const Home = () => {
           </Grid>
         </Grid>
 
+        {/* Specialties Section */}
         <Box sx={{ mb: 10 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
             <Typography variant="h3" fontWeight="bold">25+ Specialties</Typography>
@@ -350,8 +520,14 @@ const Home = () => {
                       {specialty.icon}
                     </Avatar>
                     <Typography variant="body1" fontWeight="medium">{specialty.name}</Typography>
-                    <Chip label="Find Doctors"   component={Link}
-            to="/showalldoctors" size="small" sx={{ mt: 2 }} color="primary" />
+                    <Chip 
+                      label="Find Doctors" 
+                      component={Link}
+                      to="/showalldoctors" 
+                      size="small" 
+                      sx={{ mt: 2 }} 
+                      color="primary" 
+                    />
                   </SpecialtyButton>
                 </Zoom>
               </Grid>
@@ -359,21 +535,32 @@ const Home = () => {
           </Grid>
         </Box>
 
+        {/* Doctors Section */}
         <Box>
-          <Typography variant="h3" gutterBottom fontWeight="bold" sx={{ mb: 6 }}>Popular Doctors Available</Typography>
+          <Typography variant="h3" gutterBottom fontWeight="bold" sx={{ mb: 6 }}>
+            Popular Doctors Available
+          </Typography>
           {doctors.map((doctor, index) => (
             <DoctorInfo key={index} doctor={doctor} />
           ))}
-          <Button variant="outlined" fullWidth size="large" sx={{ mt: 4, py: 2, borderRadius: 30 }}
+          <Button 
+            variant="outlined" 
+            fullWidth 
+            size="large" 
+            sx={{ mt: 4, py: 2, borderRadius: 30 }}
             component={Link}
             to="/showalldoctors"
             endIcon={<ChevronRightIcon />} 
             color="primary" 
-        
           >
             SHOW MORE DOCTORS
           </Button>
         </Box>
+
+        {/* Hospital Section */}
+        <HospitalSection />
+
+        {/* Why Choose Online Consultation Section */}
         <Box sx={{ mt: 10 }}>
           <Typography variant="h3" gutterBottom fontWeight="bold" sx={{ mb: 6 }}>
             Why Choose Online Consultation?
@@ -453,7 +640,6 @@ const Home = () => {
           <Typography variant="body1" align="center">
             All our doctors are verified professionals. Your personal information is 100% secure with us.
           </Typography>
-         
         </Box>
       </Container>
     </ThemeProvider>
