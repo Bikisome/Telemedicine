@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import {
   Typography,
   TextField,
@@ -73,6 +73,100 @@ const ConsultationBooking = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
+
+  // const [responseId, setResponseId] = React.useState("");
+  // const [responseState, setResponseState] = React.useState([]);
+
+  const loadScript = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+
+      script.src = src;
+
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
+
+  const createRazorpayOrder = (amount) => {
+    let data = JSON.stringify({
+      amount: amount * 100,
+      currency: "INR",
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:5000/orders",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        handleRazorpayScreen(response.data.amount);
+      })
+      .catch((error) => {
+        console.log("error at", error);
+      });
+  };
+
+  const handleRazorpayScreen = async (amount) => {
+    const res = await loadScript("https:/checkout.razorpay.com/v1/checkout.js");
+
+    if (!res) {
+      alert("Some error at razorpay screen loading");
+      return;
+    }
+
+    const options = {
+      key: "rzp_test_8BOI8K6MaXkjTM",
+      amount: amount,
+      currency: "INR",
+      name: "papaya coders",
+      description: "payment to papaya coders",
+      image: "https://papayacoders.com/demo.png",
+      handler: function (response) {
+        setResponseId(response.razorpay_payment_id);
+      },
+      prefill: {
+        name: "papaya coders",
+        email: "papayacoders@gmail.com",
+      },
+      theme: {
+        color: "#F4C430",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
+
+  const paymentFetch = (e) => {
+    e.preventDefault();
+
+    const paymentId = e.target.paymentId.value;
+
+    axios
+      .get(`http://localhost:5000/payment/${paymentId}`)
+      .then((response) => {
+        console.log(response.data);
+        setResponseState(response.data);
+      })
+      .catch((error) => {
+        console.log("error occures", error);
+      });
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
