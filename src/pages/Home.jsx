@@ -127,7 +127,7 @@ const hospitals = [
     image: "/api/placeholder/400/300",
     verified: true,
     doctors: 450,
-    link: "/apollo-hospital"
+    link: "https://www.apollohospitals.com/"
   },
   {
     name: "Fortis Healthcare",
@@ -137,7 +137,7 @@ const hospitals = [
     image: "/api/placeholder/400/300",
     verified: true,
     doctors: 380,
-    link: "/fortis-hospital"
+    link: "https://www.fortishealthcare.com/"
   },
   {
     name: "Max Healthcare",
@@ -147,7 +147,7 @@ const hospitals = [
     image: "/api/placeholder/400/300",
     verified: true,
     doctors: 320,
-    link: "/max-hospital"
+    link: "https://www.maxhealthcare.in/"
   }
 ];
 
