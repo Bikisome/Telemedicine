@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Typography,
   TextField,
@@ -17,23 +17,29 @@ import {
   IconButton,
   Grid,
   Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+  Alert
 } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import {
+  ArrowBack,
+  ArrowForward,
+  AccessTime,
+  ShoppingCart,
+  CalendarMonth,
+  Security,
+  CheckCircle,
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
-    primary: {
-      main: "#2196F3",
-    },
-    secondary: {
-      main: "#FF4081",
-    },
-    background: {
-      default: "#F0F4F8",
-    },
+    primary: { main: "#2196F3" },
+    secondary: { main: "#FF4081" },
+    background: { default: "#F0F4F8" },
   },
   typography: {
     fontFamily: '"Poppins", "Roboto", "Arial", sans-serif',
@@ -46,13 +52,11 @@ const theme = createTheme({
           textTransform: "none",
           fontWeight: 600,
           padding: "10px 20px",
-          boxShadow:
-            "0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)",
+          boxShadow: "0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08)",
           transition: "all 0.3s ease",
           "&:hover": {
             transform: "translateY(-2px)",
-            boxShadow:
-              "0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)",
+            boxShadow: "0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08)",
           },
         },
       },
@@ -61,8 +65,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 20,
-          boxShadow:
-            "0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06)",
+          boxShadow: "0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06)",
         },
       },
     },
@@ -73,115 +76,47 @@ const ConsultationBooking = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-
-  // const [responseId, setResponseId] = React.useState("");
-  // const [responseState, setResponseState] = React.useState([]);
-
-  const loadScript = (src) => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-
-      script.src = src;
-
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-
-      document.body.appendChild(script);
-    });
-  };
-
-  const createRazorpayOrder = (amount) => {
-    let data = JSON.stringify({
-      amount: amount * 100,
-      currency: "INR",
-    });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:5000/orders",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        handleRazorpayScreen(response.data.amount);
-      })
-      .catch((error) => {
-        console.log("error at", error);
-      });
-  };
-
-  const handleRazorpayScreen = async (amount) => {
-    const res = await loadScript("https:/checkout.razorpay.com/v1/checkout.js");
-
-    if (!res) {
-      alert("Some error at razorpay screen loading");
-      return;
-    }
-
-    const options = {
-      key: "rzp_test_8BOI8K6MaXkjTM",
-      amount: amount,
-      currency: "INR",
-      name: "papaya coders",
-      description: "payment to papaya coders",
-      image: "https://papayacoders.com/demo.png",
-      handler: function (response) {
-        setResponseId(response.razorpay_payment_id);
-      },
-      prefill: {
-        name: "papaya coders",
-        email: "papayacoders@gmail.com",
-      },
-      theme: {
-        color: "#F4C430",
-      },
-    };
-
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
-  };
-
-  const paymentFetch = (e) => {
-    e.preventDefault();
-
-    const paymentId = e.target.paymentId.value;
-
-    axios
-      .get(`http://localhost:5000/payment/${paymentId}`)
-      .then((response) => {
-        console.log(response.data);
-        setResponseState(response.data);
-      })
-      .catch((error) => {
-        console.log("error occures", error);
-      });
-  };
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    receiveUpdates: true
+  });
+  const [error, setError] = useState("");
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep === 0 && (!selectedDate || !selectedTime)) {
+      setError("Please select both date and time");
+      return;
+    }
+    setError("");
+    setActiveStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setError("");
+    setActiveStep((prev) => prev - 1);
   };
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date);
+  const handleConfirmAndPay = () => {
+    if (!bookingDetails.name || !bookingDetails.email || !bookingDetails.phone) {
+      setError("Please fill in all required fields");
+      return;
+    }
+    setError("");
+    setOpenConfirmation(true);
   };
 
-  const handleTimeSelect = (time) => {
-    setSelectedTime(time);
+  const handleProceedToPayment = () => {
+    setIsProcessing(true);
+    setTimeout(() => {
+      setIsProcessing(false);
+      setOpenConfirmation(false);
+      setShowSuccess(true);
+    }, 2000);
   };
 
   const DateSelection = () => {
@@ -200,7 +135,7 @@ const ConsultationBooking = () => {
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
           <IconButton size="small">
-            <ArrowBackIcon />
+            <ArrowBack />
           </IconButton>
           <Box sx={{ display: "flex", gap: 2 }}>
             {dates.map((item, index) => (
@@ -211,17 +146,14 @@ const ConsultationBooking = () => {
                   p: 2,
                   textAlign: "center",
                   cursor: "pointer",
-                  bgcolor:
-                    selectedDate === item.date
-                      ? "primary.main"
-                      : "background.paper",
+                  bgcolor: selectedDate === item.date ? "primary.main" : "background.paper",
                   color: selectedDate === item.date ? "white" : "text.primary",
                   "&:hover": {
                     bgcolor: "primary.light",
                     color: "white",
                   },
                 }}
-                onClick={() => handleDateSelect(item.date)}
+                onClick={() => setSelectedDate(item.date)}
               >
                 <Typography variant="body2">{item.day}</Typography>
                 <Typography variant="body1" fontWeight="bold">
@@ -231,9 +163,10 @@ const ConsultationBooking = () => {
             ))}
           </Box>
           <IconButton size="small">
-            <ArrowForwardIcon />
+            <ArrowForward />
           </IconButton>
         </Box>
+        
         <Typography variant="h6" gutterBottom>
           Select time of day
         </Typography>
@@ -241,9 +174,9 @@ const ConsultationBooking = () => {
           {["11:30 am", "01:00 pm", "04:30 pm"].map((time, index) => (
             <Grid item xs={4} key={index}>
               <Chip
-                icon={<AccessTimeIcon />}
+                icon={<AccessTime />}
                 label={time}
-                onClick={() => handleTimeSelect(time)}
+                onClick={() => setSelectedTime(time)}
                 color={selectedTime === time ? "primary" : "default"}
                 variant={selectedTime === time ? "filled" : "outlined"}
                 sx={{ width: "100%", justifyContent: "flex-start", py: 3 }}
@@ -261,31 +194,60 @@ const ConsultationBooking = () => {
         Booking Details
       </Typography>
       <Box sx={{ bgcolor: "grey.100", p: 2, borderRadius: 2, mb: 3 }}>
-        <Typography variant="body1" fontWeight="bold">
-          {selectedDate}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {selectedTime}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <CalendarMonth color="primary" />
+          <Box>
+            <Typography variant="body1" fontWeight="bold">
+              {selectedDate}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {selectedTime}
+            </Typography>
+          </Box>
+        </Box>
         <Button size="small" sx={{ mt: 1 }} onClick={handleBack}>
           Change
         </Button>
       </Box>
 
-      <TextField fullWidth label="Name" variant="outlined" margin="normal" />
-      <TextField fullWidth label="Email" variant="outlined" margin="normal" />
+      <TextField
+        fullWidth
+        label="Name"
+        variant="outlined"
+        margin="normal"
+        value={bookingDetails.name}
+        onChange={(e) => setBookingDetails({ ...bookingDetails, name: e.target.value })}
+        required
+      />
+      <TextField
+        fullWidth
+        label="Email"
+        variant="outlined"
+        margin="normal"
+        value={bookingDetails.email}
+        onChange={(e) => setBookingDetails({ ...bookingDetails, email: e.target.value })}
+        required
+      />
       <TextField
         fullWidth
         label="Phone Number"
         variant="outlined"
         margin="normal"
+        value={bookingDetails.phone}
+        onChange={(e) => setBookingDetails({ ...bookingDetails, phone: e.target.value })}
         InputProps={{
           startAdornment: <Typography sx={{ mr: 1 }}>+91</Typography>,
         }}
+        required
       />
 
       <FormControlLabel
-        control={<Checkbox defaultChecked />}
+        control={
+          <Checkbox
+            checked={bookingDetails.receiveUpdates}
+            onChange={(e) => setBookingDetails({ ...bookingDetails, receiveUpdates: e.target.checked })}
+          />
+        }
         label="Receive booking details on phone"
         sx={{ mt: 2, mb: 3 }}
       />
@@ -293,27 +255,141 @@ const ConsultationBooking = () => {
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-        <Typography variant="body1">1 x 1:1 Consultant</Typography>
-        <Typography variant="body1">₹ 1199.0</Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-        <Typography variant="body1">Other</Typography>
-        <Typography variant="body1">₹ 0.0</Typography>
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-        <Typography variant="body1" fontWeight="bold">
-          Total
-        </Typography>
-        <Typography variant="body1" fontWeight="bold">
-          ₹ 1199.0
-        </Typography>
+      <Box sx={{ bgcolor: "grey.50", p: 3, borderRadius: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+          <Typography variant="body1">1 x 1:1 Consultation</Typography>
+          <Typography variant="body1">₹ 1199.0</Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+          <Typography variant="body1">Other charges</Typography>
+          <Typography variant="body1">₹ 0.0</Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", pt: 2, borderTop: 1, borderColor: "grey.200" }}>
+          <Typography variant="body1" fontWeight="bold">
+            Total
+          </Typography>
+          <Typography variant="body1" fontWeight="bold">
+            ₹ 1199.0
+          </Typography>
+        </Box>
       </Box>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Payments are 100% secure & encrypted
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 3 }}>
+        <Security color="action" />
+        <Typography variant="body2" color="text.secondary">
+          Payments are 100% secure & encrypted
+        </Typography>
+      </Box>
     </Box>
+  );
+
+  const ConfirmationDialog = () => (
+    <Dialog 
+      open={openConfirmation} 
+      onClose={() => setOpenConfirmation(false)}
+      PaperProps={{
+        sx: {
+          borderRadius: 3,
+          width: "400px",
+          p: 2
+        }
+      }}
+    >
+      <DialogTitle sx={{ textAlign: "center", fontWeight: "bold" }}>
+        Confirm Booking Details
+      </DialogTitle>
+      <DialogContent>
+        <Box sx={{ textAlign: "center", mb: 3 }}>
+          <ShoppingCart sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />
+          <Typography variant="h6" gutterBottom>
+            1:1 Consultation Session
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 1, mb: 1 }}>
+            <CalendarMonth color="action" />
+            <Typography color="text.secondary">
+              {selectedDate} at {selectedTime}
+            </Typography>
+          </Box>
+          <Typography variant="h5" color="primary.main" fontWeight="bold" sx={{ mt: 2 }}>
+            ₹1199.0
+          </Typography>
+        </Box>
+
+        <Box sx={{ bgcolor: "grey.50", p: 2, borderRadius: 2 }}>
+          <Typography variant="body2" gutterBottom sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Security fontSize="small" />
+            Payment will be processed securely
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Booking confirmation will be sent to {bookingDetails.email}
+          </Typography>
+        </Box>
+      </DialogContent>
+      <DialogActions sx={{ p: 2, pt: 0 }}>
+        <Button 
+          onClick={() => setOpenConfirmation(false)}
+          variant="outlined"
+          fullWidth
+          sx={{ mr: 1 }}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={handleProceedToPayment}
+          variant="contained"
+          fullWidth
+          disabled={isProcessing}
+          sx={{ bgcolor: "black", "&:hover": { bgcolor: "grey.900" } }}
+        >
+          {isProcessing ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Proceed to Payment"
+          )}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
+  const SuccessDialog = () => (
+    <Dialog 
+      open={showSuccess} 
+      PaperProps={{ sx: { borderRadius: 3, width: "400px", p: 2 } }}
+    >
+      <DialogContent>
+        <Box sx={{ textAlign: "center", py: 2 }}>
+          <CheckCircle sx={{ fontSize: 64, color: "success.main", mb: 2 }} />
+          <Typography variant="h5" gutterBottom fontWeight="bold">
+            Booking Confirmed!
+          </Typography>
+          <Typography color="text.secondary" gutterBottom>
+            Your consultation is scheduled for
+          </Typography>
+          <Typography variant="h6" color="primary.main" gutterBottom>
+            {selectedDate} at {selectedTime}
+          </Typography>
+          <Box sx={{ bgcolor: "grey.50", p: 2, borderRadius: 2, mt: 3, mb: 2 }}>
+            <Typography variant="body2" gutterBottom>
+              Booking ID: #{Math.random().toString(36).substr(2, 9).toUpperCase()}
+            </Typography>
+            <Typography variant="body2">
+              Confirmation sent to {bookingDetails.email}
+            </Typography>
+          </Box>
+        </Box>
+      </DialogContent>
+      <DialogActions sx={{ p: 2, pt: 0 }}>
+        <Button
+          variant="contained"
+          fullWidth
+          component={Link}
+          to="/"
+          sx={{ bgcolor: "black", "&:hover": { bgcolor: "grey.900" } }}
+        >
+          Done
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 
   return (
@@ -325,7 +401,7 @@ const ConsultationBooking = () => {
             <Button
               component={Link}
               to="/"
-              startIcon={<ArrowBackIcon />}
+              startIcon={<ArrowBack />}
               sx={{ mr: 2 }}
             >
               Back
@@ -347,6 +423,12 @@ const ConsultationBooking = () => {
             </Step>
           </Stepper>
 
+          {error && (
+            <Alert severity="error" sx={{ mb: 3 }}>
+              {error}
+            </Alert>
+          )}
+
           {activeStep === 0 ? <DateSelection /> : <BookingDetails />}
 
           <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
@@ -356,30 +438,35 @@ const ConsultationBooking = () => {
               </Button>
             )}
             <Button
-              variant="contained"
-              onClick={activeStep === 0 ? handleNext : undefined}
-              sx={{
-                bgcolor: "black",
-                color: "white",
-                "&:hover": { bgcolor: "grey.900" },
-              }}
-            >
-              {activeStep === 0 ? "Confirm details" : "Confirm & pay"}
-            </Button>
-          </Box>
+             variant="contained"
+             onClick={activeStep === 0 ? handleNext : handleConfirmAndPay}
+             sx={{
+               bgcolor: "black",
+               color: "white",
+               "&:hover": { bgcolor: "grey.900" },
+             }}
+           >
+             {activeStep === 0 ? "Confirm details" : "Confirm & pay"}
+           </Button>
+         </Box>
 
-          {activeStep === 1 && (
-            <Box
-              sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}
-            >
-              <Typography variant="body2">Terms</Typography>
-              <Typography variant="body2">Privacy</Typography>
-            </Box>
-          )}
-        </Paper>
-      </Container>
-    </ThemeProvider>
-  );
+         {activeStep === 1 && (
+           <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+             <Typography variant="body2" component={Link} to="/terms" sx={{ color: 'text.secondary', textDecoration: 'none' }}>
+               Terms
+             </Typography>
+             <Typography variant="body2" component={Link} to="/privacy" sx={{ color: 'text.secondary', textDecoration: 'none' }}>
+               Privacy
+             </Typography>
+           </Box>
+         )}
+
+         <ConfirmationDialog />
+         <SuccessDialog />
+       </Paper>
+     </Container>
+   </ThemeProvider>
+ );
 };
 
 export default ConsultationBooking;
